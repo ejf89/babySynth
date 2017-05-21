@@ -8,24 +8,24 @@ oscillator.start(context.currentTime);
 var startButton = document.querySelector(".start")
 var stopButton = document.querySelector(".stop")
 
+var biquadFilter = context.createBiquadFilter()
+var filterFreq = $(".filterFreqSlider")[0]
 startButton.onclick = start;
 stopButton.onclick = stop;
 
     function start(){
-        oscillator.connect(context.destination);
-
+        oscillator.connect(biquadFilter)
+        biquadFilter.connect(context.destination);
     }
 
     function stop(){
-        oscillator.disconnect(context.destination);
+        biquadFilter.disconnect(context.destination);
     }
 
     function ping(){
         start()
         setTimeout(stop, 1000);
-
     }
-
 
     function makeNoteBox(i){
         var box = document.createElement('div')
@@ -39,12 +39,38 @@ stopButton.onclick = stop;
     }
 
     let notes = $(".noteBoxHolder")[0].children
+    let accidentals = []
+
 
     for (var i = 0; i < notes.length; i++){
         notes.on = false
         notes[i].onclick = ping;
-        // notes[i].onclick () => {this.on = }
     }
+
+    accidentals.push(notes[1], notes[3], notes[6], notes[8], notes[10])
+
+    for(var note in accidentals){
+        accidentals[note].className = "accidental"
+    }
+
+    let freq = document.querySelector(".filterFreqSlider")
+    let detune = document.querySelector(".filterDetuneSlider")
+    let qSlide = document.querySelector(".freqQSlider")
+
+    freq.oninput = () => {
+        biquadFilter.frequency.value = freq.value
+    }
+
+    detune.oninput = () => {
+        biquadFilter.detune.value = detune.value
+    }
+
+    qSlide.oninput = () => {
+        biquadFilter.Q.value = qSlide.value
+    }
+
+
+
 
     //create note labels (maybe get rid of these?)
     notes[0].innerHTML = "C"
@@ -59,6 +85,7 @@ stopButton.onclick = stop;
     notes[9].innerHTML = "A"
     notes[10].innerHTML = "A#"
     notes[11].innerHTML = "B"
+
 
     //assing chromatic values to keys based on frequency
     notes[0].onclick = () => {oscillator.frequency.value = 	261.63; ping()}

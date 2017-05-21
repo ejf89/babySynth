@@ -1,13 +1,29 @@
+.noteBoxHolder{
+    width: 70%;
+    margin-left: auto;
+}
+
 .noteBox{
     height: 90px;
     width: 20px;
     background-color: blue;
     display: inline-block;
-     margin: 10px;
-     text-align: center;
-     color: white;
+    margin: 10px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
 }
 
+.accidental{
+    height: 60px;
+    width: 20px;
+    background-color: lightgreen;
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    vertical-align: top;
+    color: white;
+}
 
 body {
     background-color: yellow;
