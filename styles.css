@@ -1,0 +1,14 @@
+.noteBox{
+    height: 90px;
+    width: 20px;
+    background-color: blue;
+    display: inline-block;
+     margin: 10px;
+     text-align: center;
+     color: white;
+}
+
+
+body {
+    background-color: yellow;
+}
